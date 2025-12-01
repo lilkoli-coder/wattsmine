@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WattMine — Landing (clone)</title>
+  <meta name="description" content="Simple responsive landing page inspired by WattMineAgenciess" />
+  <!-- Tailwind CDN for quick prototyping -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="antialiased text-gray-800 bg-white">
+
+<!-- SIGNUP SECTION -->
+<section id="signupSection" class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-amber-500 via-pink-500 to-purple-600 text-white p-10">
+  <h1 class="text-4xl font-extrabold mb-6">Create Your WattMine Account</h1>
+  <div class="bg-white text-gray-800 p-8 rounded-2xl shadow-2xl w-full max-w-md">
+    <input id="signupName" class="w-full p-3 border rounded mb-3" placeholder="Full Name" />
+    <input id="signupPhone" class="w-full p-3 border rounded mb-3" placeholder="Phone Number" />
+    <input id="signupPass" type="password" class="w-full p-3 border rounded mb-3" placeholder="Password" />
+    <button onclick="goToDashboard()" class="w-full bg-amber-600 text-white py-3 rounded-lg font-semibold">Create Account</button>
+  </div>
+</section>
+
+<!-- DASHBOARD SECTION (hidden initially) -->
+<section id="dashboardSection" class="hidden min-h-screen p-10 text-white bg-gradient-to-r from-purple-600 via-pink-500 to-amber-500 relative">
+
+  <!-- Hamburger Menu -->
+  <div class="absolute top-6 right-6 cursor-pointer" onclick="toggleMenu()">
+    <div class="h-1 w-8 bg-white mb-1"></div>
+    <div class="h-1 w-8 bg-yellow-300 mb-1"></div>
+    <div class="h-1 w-8 bg-green-300"></div>
+  </div>
+
+  <div class="text-center mt-20">
+    <h2 class="text-4xl font-bold">Welcome to Your Dashboard ⚡</h2>
+    <p class="mt-4 text-lg opacity-90">Your account has been created successfully.</p>
+
+    <!-- INTRODUCTION SECTION -->
+    <section id="introSection" class="mt-12 bg-white text-gray-800 p-10 rounded-3xl shadow-2xl animate-fadeIn">
+      <h3 class="text-4xl font-extrabold mb-6 text-purple-700 text-center tracking-wide">Welcome to WattMine</h3>
+      <p class="text-lg leading-relaxed text-center max-w-3xl mx-auto opacity-90">
+        Your gateway to online earnings — freelancing, micro-tasks, and crypto rewards all in one place.
+        Fast, simple, and designed for beginners.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+        <img src="https://i.imgur.com/4ZQZy3U.png" class="rounded-2xl shadow-xl w-full animate-slideUp" alt="Freelancing" />
+        <img src="https://i.imgur.com/3PmV4Vf.png" class="rounded-2xl shadow-xl w-full animate-slideUp delay-100" alt="Crypto" />
+        <img src="https://i.imgur.com/7w4dJHF.png" class="rounded-2xl shadow-xl w-full animate-slideUp delay-200" alt="Digital Work" />
+      </div>
+
+      <div class="text-center mt-10">
+        <button onclick="scrollToActivation()" class="bg-gradient-to-r from-purple-600 to-pink-500 text-white px-8 py-4 rounded-full text-xl font-bold shadow-lg hover:scale-105 transition">
+          Get Started
+        </button>
+      </div>
+    </section>
+
+    <p class="mt-4 text-lg opacity-90"></p>
+  </div>
+</section>
+
+<!-- MENU SECTION (hidden) -->
+<section id="menuSection" class="hidden fixed top-0 right-0 bg-white shadow-2xl w-64 h-full p-6 z-50">
+  <h3 class="text-xl font-bold mb-4">Menu</h3>
+  <ul class="space-y-4 text-gray-700">
+    <li><button onclick="showServices()">Services Offered</button></li>
+    <li><button onclick="showActivation()">Account Activation</button></li>
+  </ul>
+</section>
+
+<!-- ACTIVATION SECTION (hidden) -->
+<section id="activationSection" class="hidden min-h-screen p-10 bg-red-50 text-center">
+  <h2 class="text-2xl font-bold text-red-600">Account Activation</h2>
+  <p class="mt-2 text-red-700">Activation fee: <strong>KES 100</strong></p>
+  <p class="mt-1 text-red-700 font-semibold">Pay to: 0791347244</p>
+
+  <div class="mt-6 max-w-md mx-auto">
+    <input id="payerNumber2" class="w-full p-3 border rounded mb-3" placeholder="Enter your M-Pesa number" />
+    <button onclick="activateAccount()" class="w-full bg-green-600 text-white p-3 rounded font-bold">Proceed to Pay</button>
+    <p id="activationStatus" class="mt-3 text-sm"></p>
+  </div>
+</section>
+
+<!-- MAIN HOMEPAGE (hidden until activation) -->
+<section id="homePageSection" class="hidden">
+  <main class="max-w-6xl mx-auto px-6 py-24 text-center">
+    <h1 class="text-5xl font-extrabold">Welcome to WattMine ⚡</h1>
+    <p class="mt-4 text-gray-600">Powering your digital journey…</p>
+  </main>
+</section>
+
+<script>
+function goToDashboard() {
+  document.getElementById('signupSection').classList.add('hidden');
+  document.getElementById('dashboardSection').classList.remove('hidden');
+}
+
+function toggleMenu() {
+  const menu = document.getElementById('menuSection');
+  menu.classList.toggle('hidden');
+}
+
+function showServices() {
+  alert("Services section coming soon.");
+}
+
+function showActivation() {
+  document.getElementById('dashboardSection').classList.add('hidden');
+  document.getElementById('menuSection').classList.add('hidden');
+  document.getElementById('activationSection').classList.remove('hidden');
+}
+
+function activateAccount() {
+  const num = document.getElementById('payerNumber2').value;
+  const status = document.getElementById('activationStatus');
+
+  if (num.trim() === "") {
+    status.textContent = "Enter a valid phone number.";
+    status.style.color = "red";
+    return;
+  }
+
+  status.textContent = "Sending payment request...";
+  status.style.color = "green";
+
+  setTimeout(() => {
+    document.getElementById('activationSection').classList.add('hidden');
+    document.getElementById('homePageSection').classList.remove('hidden');
+  }, 1500);
+}
+</script>
+
+
+<script>
+// Smooth page transitions
+function fadeTo(section) {
+  document.querySelectorAll('section').forEach(sec => sec.classList.add('hidden'));
+  document.getElementById(section).classList.remove('hidden');
+}
+
+// Scroll to activation from Get Started
+function scrollToActivation(){
+  fadeTo('activationSection');
+}
+
+// Open login page
+function openLogin(){
+  fadeTo('loginSection');
+}
+
+// Improved M-Pesa pop-up simulation
+function mpesaPopup(){
+  alert("M-PESA: Confirm Lipa na M-Pesa Payment of KES 100 to 0791347244");
+}
+</script>
+
+<!-- LOGIN SECTION -->
+<section id="loginSection" class="hidden min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600 p-10 text-white">
+  <h1 class="text-4xl font-bold mb-6">Login to WattMine</h1>
+  <div class="bg-white text-gray-800 p-8 rounded-2xl shadow-2xl w-full max-w-md">
+    <input class="w-full p-3 border rounded mb-3" placeholder="Phone Number" />
+    <input type="password" class="w-full p-3 border rounded mb-3" placeholder="Password" />
+    <button onclick="fadeTo('dashboardSection')" class="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold">Login</button>
+  </div>
+</section>
+
+<!-- SERVICES PAGE -->
+<section id="servicesPage" class="hidden min-h-screen p-12 bg-gray-50">
+  <h2 class="text-3xl font-bold text-center mb-10 text-purple-700">Our Services</h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+    <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+      <h3 class="font-bold text-xl mb-3">Freelance Microtasks</h3>
+      <p class="text-gray-700">Simple tasks that pay instantly.</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+      <h3 class="font-bold text-xl mb-3">Crypto Rewards</h3>
+      <p class="text-gray-700">Earn through blockchain bonuses.</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+      <h3 class="font-bold text-xl mb-3">Referral Earnings</h3>
+      <p class="text-gray-700">Invite friends and earn commissions.</p>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- USER PROFILE PAGE -->
+<section id="profilePage" class="hidden min-h-screen p-10 bg-gradient-to-br from-purple-600 to-indigo-600 text-white">
+  <h2 class="text-4xl font-bold text-center mb-8">My Profile</h2>
+  <div class="bg-white text-gray-800 p-8 rounded-3xl shadow-2xl max-w-xl mx-auto">
+    <p class="text-lg"><strong>Name:</strong> User</p>
+    <p class="text-lg mt-2"><strong>Phone:</strong> +2547XXXXXXX</p>
+    <p class="text-lg mt-2"><strong>Account Status:</strong> <span class="text-green-600 font-bold">Activated</span></p>
+    <button onclick="fadeTo('dashboardSection')" class="mt-6 bg-purple-600 w-full text-white p-3 rounded-xl">Back to Dashboard</button>
+  </div>
+</section>
+
+<!-- EARNINGS DASHBOARD -->
+<section id="earningsPage" class="hidden min-h-screen p-12 bg-gray-100">
+  <h2 class="text-3xl font-bold text-center text-purple-700 mb-10">Earnings Dashboard</h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+    <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+      <h3 class="text-xl font-bold text-green-600">Total Earnings</h3>
+      <p class="text-3xl font-extrabold mt-2">KES 0.00</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+      <h3 class="text-xl font-bold text-blue-600">Referral Bonus</h3>
+      <p class="text-3xl font-extrabold mt-2">KES 0.00</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+      <h3 class="text-xl font-bold text-yellow-600">Task Income</h3>
+      <p class="text-3xl font-extrabold mt-2">KES 0.00</p>
+    </div>
+  </div>
+</section>
+
+<!-- REFERRAL SYSTEM -->
+<section id="referralPage" class="hidden min-h-screen p-10 bg-white">
+  <h2 class="text-3xl font-bold text-center text-purple-700 mb-6">Referral Program</h2>
+  <p class="text-center max-w-2xl mx-auto text-gray-700">Invite your friends to WattMine and earn <strong>KES 20</strong> for every successful referral.</p>
+  <div class="text-center mt-10">
+    <input id="refLink" value="https://wattmine.com/ref/12345" class="p-3 border rounded w-full max-w-md" readonly>
+    <button onclick="copyReferral()" class="mt-4 bg-purple-600 text-white px-8 py-3 rounded-xl">Copy Referral Link</button>
+    <p id="copyStatus" class="mt-3 text-sm text-green-600"></p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-gray-900 text-white p-10 text-center mt-10">
+  <p class="text-lg">© 2025 WattMine — All Rights Reserved</p>
+  <p class="mt-2">Follow us:</p>
+  <div class="flex justify-center space-x-4 mt-3">
+    <span>📘 Facebook</span>
+    <span>📸 Instagram</span>
+    <span>🐦 Twitter</span>
+  </div>
+</footer>
+
+<script>
+function copyReferral() {
+  const link = document.getElementById('refLink');
+  navigator.clipboard.writeText(link.value);
+  document.getElementById('copyStatus').textContent = "Referral link copied!";
+}
+</script>
+
+</body>
+</html>
